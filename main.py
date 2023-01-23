@@ -15,6 +15,10 @@ FPS = 120
 img_background = pygame.image.load(file_path("fon.jpg"))
 img_background = pygame.transform.scale(img_background, (WIN_WIDTH, WIN_HEIGHT))
 
+pygame.mixer.music.load(file_path("fon.wav"))
+pygame.mixer.music.set_volume(0.7)
+pygame.mixer.music.play(-1)
+
 window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption("shuter")
 clock = pygame.time.Clock()
