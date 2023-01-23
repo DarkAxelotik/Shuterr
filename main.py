@@ -12,6 +12,9 @@ WIN_WIDTH, WIN_HEIGHT = 700, 500
 FPS = 120
 
 
+img_background = pygame.image.load(file_path("fon.jpg"))
+img_background = pygame.transform.scale(img_background, (WIN_WIDTH, WIN_HEIGHT))
+
 window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption("shuter")
 clock = pygame.time.Clock()
@@ -24,6 +27,9 @@ while game:
         if event.type == pygame.QUIT:
             game = False
 
+    if play == True:
+        window.blit(img_background,(0, 0))
 
-            clock.tick(FPS)
+
+    clock.tick(FPS)
     pygame.display.update()
