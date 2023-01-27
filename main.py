@@ -15,7 +15,7 @@ FPS = 120
 img_background = pygame.image.load(file_path("fon.jpg"))
 img_background = pygame.transform.scale(img_background, (WIN_WIDTH, WIN_HEIGHT))
 
-pygame.mixer.music.load(file_path("fon.wav"))
+pygame.mixer.music.load(file_path("FNAF_Security_Breach_OST：_＂Fazer_Blast_Jam.wav"))
 pygame.mixer.music.set_volume(0.7)
 pygame.mixer.music.play(-1)
 
