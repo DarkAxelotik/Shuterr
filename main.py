@@ -8,7 +8,7 @@ def file_path(file_name):
     return path
 
 
-WIN_WIDTH, WIN_HEIGHT = 700, 500
+WIN_WIDTH, WIN_HEIGHT = 1000, 800
 FPS = 120
 
 
