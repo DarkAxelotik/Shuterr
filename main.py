@@ -39,7 +39,7 @@ class GameSprite(pygame.sprite.Sprite):
 
 class Player(GameSprite):
     def __init__(self, x, y, width, height, img, speed):
-        super().__init__(x, y, width, heigtht, img, speed)
+        super().__init__(x, y, width, height, img, speed)
         
     def update(self):
         keys = pygame.key.get_pressed()
@@ -47,6 +47,12 @@ class Player(GameSprite):
             self.rect.x -= self.speed
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.speed
+
+    def fire(self):
+        pass
+
+player = Player(300, 400, 120, 70, "sf.png", 5)
+
 
 play = True
 game = True
@@ -58,6 +64,8 @@ while game:
     if play == True:
         window.blit(img_background,(0, 0))
 
+        player.reset()
+        player.update()
 
     clock.tick(FPS)
     pygame.display.update()
