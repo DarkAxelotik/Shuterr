@@ -51,7 +51,7 @@ class Player(GameSprite):
     def fire(self):
         pass
 
-player = Player(300, 400, 120, 70, "sf.png", 5)
+player = Player(300, 400, 220, 100, "sf.png", 5)
 
 
 play = True
