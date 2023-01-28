@@ -37,6 +37,17 @@ class GameSprite(pygame.sprite.Sprite):
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
+class Player(GameSprite):
+    def __init__(self, x, y, width, height, img, speed):
+        super().__init__(x, y, width, heigtht, img, speed)
+        
+    def update(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.speed
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.speed
+
 play = True
 game = True
 while game:
