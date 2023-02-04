@@ -11,6 +11,7 @@ def file_path(file_name):
 
 WIN_WIDTH, WIN_HEIGHT = 1000, 800
 FPS = 120
+WHITE = (255, 255, 255)
 
 
 img_background = pygame.image.load(file_path("fon.jpg"))
@@ -57,8 +58,11 @@ class Enemy(GameSprite):
         super().__init__(x, y, width, height, img, speed)
 
     def update(self):
+        global score_lose
         self.rect.y += self.speed
         if self.rect.y > WIN_HEIGHT:
+            self.rect.x = randint(0,WIN_WIDTH-70)
+            score_lose += 1
             self.rect.y = 0
 
 enemys =  pygame.sprite.Group()
@@ -68,6 +72,14 @@ for  i in range(5):
 
 
 player = Player(400, 500, 320, 300, file_path("arc_warden.png"), 5)
+
+score_lose = 0 
+score_destroy = 0 
+
+
+font = pygame.font.SysFont("arial", 30, 0, 1)
+txt_lose = font.render("skip"+ str(score_lose), True,WHITE)
+txt_destroy = font.render("destroy"+ str(score_destroy), True,WHITE)
 
 
 
@@ -80,6 +92,12 @@ while game:
 
     if play == True:
         window.blit(img_background,(0, 0))
+        txt_lose = font.render("skip"+ str(score_lose), True,WHITE)
+        txt_destroy = font.render("destroy"+ str(score_destroy), True,WHITE)
+
+        window.blit(txt_lose, (50,50))
+        window.blit(txt_destroy, (50,80))
+
 
         player.reset()
         player.update()
