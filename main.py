@@ -1,5 +1,6 @@
 import pygame
 import os
+from random import randint
 pygame.init()
 
 def file_path(file_name):
@@ -40,7 +41,7 @@ class GameSprite(pygame.sprite.Sprite):
 class Player(GameSprite):
     def __init__(self, x, y, width, height, img, speed):
         super().__init__(x, y, width, height, img, speed)
-        
+     
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -51,7 +52,23 @@ class Player(GameSprite):
     def fire(self):
         pass
 
-player = Player(300, 400, 320, 300, "arc_warden.png", 5)
+class Enemy(GameSprite):
+    def __init__(self, x, y, width, height, img, speed):
+        super().__init__(x, y, width, height, img, speed)
+
+    def update(self):
+        self.rect.y += self.speed
+        if self.rect.y > WIN_HEIGHT:
+            self.rect.y = 0
+
+enemys =  pygame.sprite.Group()
+for  i in range(5):
+    enemy = Enemy(randint(0, WIN_WIDTH - 220), 0, 220, 200, file_path("vrag.png"), randint(1, 7))
+    enemys.add(enemy) 
+
+
+player = Player(400, 500, 320, 300, file_path("arc_warden.png"), 5)
+
 
 
 play = True
@@ -66,6 +83,9 @@ while game:
 
         player.reset()
         player.update()
+
+        enemys.draw(window)
+        enemys.update()
 
     clock.tick(FPS)
     pygame.display.update()
