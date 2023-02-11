@@ -12,7 +12,8 @@ def file_path(file_name):
 WIN_WIDTH, WIN_HEIGHT = 1000, 800
 FPS = 120
 WHITE = (255, 255, 255)
-
+RED = (0, 0, 255)
+GREEN = (0, 255, 0)
 
 img_background = pygame.image.load(file_path("fon.jpg"))
 img_background = pygame.transform.scale(img_background, (WIN_WIDTH, WIN_HEIGHT))
@@ -51,7 +52,18 @@ class Player(GameSprite):
             self.rect.x += self.speed
 
     def fire(self):
-        pass
+        bullet = Bullet(self.rect.centerx, self.rect.top, 120, 100, file_path("ctrelat.png"), 5) 
+        bullets.add(bullet) 
+class Bullet(GameSprite):
+    def __init__(self, x, y, width, height, img, speed):
+        super().__init__(x, y, width, height, img, speed)
+
+    def update(self):
+        self.rect.y -= self.speed
+        if self.rect.bottom <= 0:
+            self.kill()
+
+
 
 class Enemy(GameSprite):
     def __init__(self, x, y, width, height, img, speed):
@@ -69,6 +81,9 @@ enemys =  pygame.sprite.Group()
 for  i in range(5):
     enemy = Enemy(randint(0, WIN_WIDTH - 220), 0, 220, 200, file_path("vrag.png"), randint(1, 7))
     enemys.add(enemy) 
+
+
+bullets = pygame.sprite.Group()
 
 
 player = Player(400, 500, 320, 300, file_path("arc_warden.png"), 5)
@@ -89,6 +104,11 @@ while game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
+    
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:
+                player.fire()
+
 
     if play == True:
         window.blit(img_background,(0, 0))
@@ -104,6 +124,29 @@ while game:
 
         enemys.draw(window)
         enemys.update()
+
+        bullets.draw(window)
+        bullets.update()
+
+
+        enemysandbullet = pygame.sprite.groupcollide(enemys, bullets, False, True)
+        if enemysandbullet:
+            for enemy  in enemysandbullet:
+                score_destroy += 1
+                enemy.rect.x = randint(0, WIN_WIDTH -70)
+                enemy.rect.y = 0
+        if score_lose >= 5 or pygame.sprite.spritecollide(player, enemys, False):
+            play = False
+            font2 = pygame.font.SysFont("arial", 50, 1)
+            txt_gameover = font2.render("LOOOOSE", True, RED)
+            window.blit(txt_gameover, (350, 300))
+            
+        elif score_destroy >= 1:
+            play = False
+            font3 = pygame.font.SysFont("arial", 50, 1)
+            txt_gameover = font3.render("WIIN", True, GREEN)
+            window.blit(txt_gameover, (350, 300))
+
 
     clock.tick(FPS)
     pygame.display.update()
