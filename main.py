@@ -12,7 +12,7 @@ def file_path(file_name):
 WIN_WIDTH, WIN_HEIGHT = 1000, 800
 FPS = 120
 WHITE = (255, 255, 255)
-RED = (0, 0, 255)
+RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 
 img_background = pygame.image.load(file_path("fon.jpg"))
@@ -21,6 +21,10 @@ img_background = pygame.transform.scale(img_background, (WIN_WIDTH, WIN_HEIGHT))
 pygame.mixer.music.load(file_path("FNAF_Security_Breach_OST：_＂Fazer_Blast_Jam.wav"))
 pygame.mixer.music.set_volume(0.7)
 pygame.mixer.music.play(-1)
+
+
+music_lose = pygame.mixer.Sound(file_path("Music_default_dire_lose.mp3.wav"))
+music_win = pygame.mixer.Sound(file_path("Music_default_dire_win.mp3.wav"))
 
 window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption("shuter")
@@ -140,13 +144,16 @@ while game:
             font2 = pygame.font.SysFont("arial", 50, 1)
             txt_gameover = font2.render("LOOOOSE", True, RED)
             window.blit(txt_gameover, (350, 300))
-            
+            pygame.mixer.music.stop()
+            music_lose.play()
+
         elif score_destroy >= 1:
             play = False
             font3 = pygame.font.SysFont("arial", 50, 1)
             txt_gameover = font3.render("WIIN", True, GREEN)
             window.blit(txt_gameover, (350, 300))
-
+            pygame.mixer.music.stop()
+            music_win.play()
 
     clock.tick(FPS)
     pygame.display.update()
